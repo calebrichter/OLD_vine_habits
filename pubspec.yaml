@@ -1,0 +1,35 @@
+name: vine_habits
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_localized_locales: 
+  dual_screen: ^1.0.4
+  intl: any
+  adaptive_breakpoints: ^0.1.1
+  animations: ^2.0.2
+  google_fonts: ^4.0.1
+  transparent_image: ^2.0.1
+
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  grinder: ^0.9.1
+  build_runner:
+  flutter_gen_runner:
+
+flutter:
+  uses-material-design: true
+  generate: true
