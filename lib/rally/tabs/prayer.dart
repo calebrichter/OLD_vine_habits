@@ -11,14 +11,14 @@ import 'package:vine_habits/rally/finance.dart';
 import 'package:vine_habits/rally/tabs/sidebar.dart';
 
 /// A page that shows a summary of bills.
-class BillsView extends StatefulWidget {
-  const BillsView({super.key});
+class PrayerView extends StatefulWidget {
+  const PrayerView({super.key});
 
   @override
-  State<BillsView> createState() => _BillsViewState();
+  State<PrayerView> createState() => _PrayerViewState();
 }
 
-class _BillsViewState extends State<BillsView>
+class _PrayerViewState extends State<PrayerView>
     with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {

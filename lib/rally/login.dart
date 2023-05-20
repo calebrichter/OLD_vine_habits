@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// ignore_for_file: prefer_const_constructors, duplicate_ignore
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
@@ -196,6 +198,7 @@ class _SmallLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
+      // ignore: prefer_const_constructors
       padding: EdgeInsets.symmetric(vertical: 64),
       child: SizedBox(
         height: 160,

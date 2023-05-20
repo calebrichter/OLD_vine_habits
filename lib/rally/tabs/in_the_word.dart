@@ -11,8 +11,8 @@ import 'package:vine_habits/rally/finance.dart';
 import 'package:vine_habits/rally/tabs/sidebar.dart';
 
 /// A page that shows a summary of accounts.
-class AccountsView extends StatelessWidget {
-  const AccountsView({super.key});
+class InTheWordView extends StatelessWidget {
+  const InTheWordView({super.key});
 
   @override
   Widget build(BuildContext context) {

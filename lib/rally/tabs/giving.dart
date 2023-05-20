@@ -10,14 +10,14 @@ import 'package:vine_habits/rally/data.dart';
 import 'package:vine_habits/rally/finance.dart';
 import 'package:vine_habits/rally/tabs/sidebar.dart';
 
-class BudgetsView extends StatefulWidget {
-  const BudgetsView({super.key});
+class GivingView extends StatefulWidget {
+  const GivingView({super.key});
 
   @override
-  State<BudgetsView> createState() => _BudgetsViewState();
+  State<GivingView> createState() => _GivingViewState();
 }
 
-class _BudgetsViewState extends State<BudgetsView>
+class _GivingViewState extends State<GivingView>
     with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {

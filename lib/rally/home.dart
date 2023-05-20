@@ -7,13 +7,14 @@ import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 import 'package:vine_habits/data/gallery_options.dart';
 import 'package:vine_habits/layout/adaptive.dart';
 import 'package:vine_habits/layout/text_scale.dart';
-import 'package:vine_habits/rally/tabs/accounts.dart';
-import 'package:vine_habits/rally/tabs/bills.dart';
-import 'package:vine_habits/rally/tabs/budgets.dart';
+import 'package:vine_habits/rally/tabs/in_the_word.dart';
+import 'package:vine_habits/rally/tabs/prayer.dart';
+import 'package:vine_habits/rally/tabs/giving.dart';
 import 'package:vine_habits/rally/tabs/overview.dart';
 import 'package:vine_habits/rally/tabs/settings.dart';
+import 'package:vine_habits/rally/tabs/fellowship.dart';
 
-const int tabCount = 5;
+const int tabCount = 6;
 const int turnsToRotateRight = 1;
 const int turnsToRotateLeft = 3;
 
@@ -66,10 +67,13 @@ class _HomePageState extends State<HomePage>
       final isTextDirectionRtl =
           GalleryOptions.of(context).resolvedTextDirection() ==
               TextDirection.rtl;
+      // The tab bar is rotated in RTL mode so that swiping up opens the
+      // drawer and swiping down opens the bottom sheet.
       final verticalRotation =
           isTextDirectionRtl ? turnsToRotateLeft : turnsToRotateRight;
       final revertVerticalRotation =
           isTextDirectionRtl ? turnsToRotateRight : turnsToRotateLeft;
+      // The tab bar is rotated, so the tab bar view also needs to be rotated
       tabBarView = Row(
         children: [
           Container(
@@ -80,6 +84,7 @@ class _HomePageState extends State<HomePage>
               children: [
                 const SizedBox(height: 24),
                 ExcludeSemantics(
+                  // On desktop, the logo and the tab bar appear in the top left corner.
                   child: SizedBox(
                     height: 80,
                     child: Image.asset(
@@ -187,25 +192,33 @@ class _HomePageState extends State<HomePage>
       ),
       _RallyTab(
         theme: theme,
-        iconData: Icons.attach_money,
-        title: localizations.rallyTitleAccounts,
+        iconData: Icons.menu_book,
+        title: 'IN THE WORD',
         tabIndex: 1,
         tabController: _tabController,
         isVertical: isVertical,
       ),
       _RallyTab(
         theme: theme,
-        iconData: Icons.money_off,
-        title: localizations.rallyTitleBills,
+        iconData: Icons.handshake,
+        title: 'PRAYER',
         tabIndex: 2,
         tabController: _tabController,
         isVertical: isVertical,
       ),
       _RallyTab(
         theme: theme,
-        iconData: Icons.table_chart,
-        title: localizations.rallyTitleBudgets,
+        iconData: Icons.volunteer_activism,
+        title: 'GIVING',
         tabIndex: 3,
+        tabController: _tabController,
+        isVertical: isVertical,
+      ),
+      _RallyTab(
+        theme: theme,
+        iconData: Icons.diversity_3,
+        title: 'FELLOWSHIP',
+        tabIndex: 4,
         tabController: _tabController,
         isVertical: isVertical,
       ),
@@ -213,7 +226,7 @@ class _HomePageState extends State<HomePage>
         theme: theme,
         iconData: Icons.settings,
         title: localizations.rallyTitleSettings,
-        tabIndex: 4,
+        tabIndex: 5,
         tabController: _tabController,
         isVertical: isVertical,
       ),
@@ -223,9 +236,10 @@ class _HomePageState extends State<HomePage>
   List<Widget> _buildTabViews() {
     return const [
       OverviewView(),
-      AccountsView(),
-      BillsView(),
-      BudgetsView(),
+      InTheWordView(),
+      PrayerView(),
+      GivingView(),
+      FellowshipView(),
       SettingsView(),
     ];
   }
