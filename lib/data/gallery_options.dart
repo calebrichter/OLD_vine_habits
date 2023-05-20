@@ -2,10 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
 import 'package:vine_habits/constants.dart';
 
@@ -41,7 +38,6 @@ class GalleryOptions {
     required double? textScaleFactor,
     required this.customTextDirection,
     required Locale? locale,
-    required this.timeDilation,
     required this.platform,
     required this.isTestMode,
   })  : _textScaleFactor = textScaleFactor ?? 1.0,
@@ -51,7 +47,6 @@ class GalleryOptions {
   final double _textScaleFactor;
   final CustomTextDirection customTextDirection;
   final Locale? _locale;
-  final double timeDilation;
   final TargetPlatform? platform;
   final bool isTestMode; // True for integration tests.
 
@@ -126,7 +121,6 @@ class GalleryOptions {
       textScaleFactor: textScaleFactor ?? _textScaleFactor,
       customTextDirection: customTextDirection ?? this.customTextDirection,
       locale: locale ?? this.locale,
-      timeDilation: timeDilation ?? this.timeDilation,
       platform: platform ?? this.platform,
       isTestMode: isTestMode ?? this.isTestMode,
     );
@@ -139,7 +133,6 @@ class GalleryOptions {
       _textScaleFactor == other._textScaleFactor &&
       customTextDirection == other.customTextDirection &&
       locale == other.locale &&
-      timeDilation == other.timeDilation &&
       platform == other.platform &&
       isTestMode == other.isTestMode;
 
@@ -149,7 +142,6 @@ class GalleryOptions {
         _textScaleFactor,
         customTextDirection,
         locale,
-        timeDilation,
         platform,
         isTestMode,
       );
@@ -228,7 +220,6 @@ class ModelBinding extends StatefulWidget {
 
 class _ModelBindingState extends State<ModelBinding> {
   late GalleryOptions currentModel;
-  Timer? _timeDilationTimer;
 
   @override
   void initState() {
@@ -238,31 +229,11 @@ class _ModelBindingState extends State<ModelBinding> {
 
   @override
   void dispose() {
-    _timeDilationTimer?.cancel();
-    _timeDilationTimer = null;
     super.dispose();
-  }
-
-  void handleTimeDilation(GalleryOptions newModel) {
-    if (currentModel.timeDilation != newModel.timeDilation) {
-      _timeDilationTimer?.cancel();
-      _timeDilationTimer = null;
-      if (newModel.timeDilation > 1) {
-        // We delay the time dilation change long enough that the user can see
-        // that UI has started reacting and then we slam on the brakes so that
-        // they see that the time is in fact now dilated.
-        _timeDilationTimer = Timer(const Duration(milliseconds: 150), () {
-          timeDilation = newModel.timeDilation;
-        });
-      } else {
-        timeDilation = newModel.timeDilation;
-      }
-    }
   }
 
   void updateModel(GalleryOptions newModel) {
     if (newModel != currentModel) {
-      handleTimeDilation(newModel);
       setState(() {
         currentModel = newModel;
       });

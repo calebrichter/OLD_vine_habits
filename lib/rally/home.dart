@@ -83,8 +83,8 @@ class _HomePageState extends State<HomePage>
                   child: SizedBox(
                     height: 80,
                     child: Image.asset(
-                      'logo.png',
-                      package: 'rally_assets',
+                      'assets/logo.png',
+                      scale: .3,
                     ),
                   ),
                 ),

@@ -151,8 +151,7 @@ class _TopBar extends StatelessWidget {
                 child: SizedBox(
                   height: 80,
                   child: FadeInImagePlaceholder(
-                    image:
-                        const AssetImage('logo.png', package: 'rally_assets'),
+                    image: Image.asset('assets/logo.png', scale: .3).image,
                     placeholder: LayoutBuilder(builder: (context, constraints) {
                       return SizedBox(
                         width: constraints.maxHeight,
@@ -196,13 +195,13 @@ class _SmallLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(vertical: 64),
       child: SizedBox(
         height: 160,
         child: ExcludeSemantics(
           child: FadeInImagePlaceholder(
-            image: AssetImage('logo.png', package: 'rally_assets'),
+            image: Image.asset('assets/logo.png', scale: .3).image,
             placeholder: SizedBox.shrink(),
           ),
         ),
