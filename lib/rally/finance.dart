@@ -17,22 +17,17 @@ import 'package:vine_habits/rally/charts/vertical_fraction_bar.dart';
 import 'package:vine_habits/rally/colors.dart';
 import 'package:vine_habits/rally/data.dart';
 import 'package:vine_habits/rally/formatters.dart';
+import 'package:vine_habits/rally/charts/rotating_quote.dart';
 
 class FinancialEntityView extends StatelessWidget {
   const FinancialEntityView({
     super.key,
-    required this.heroLabel,
-    required this.heroAmount,
-    required this.wholeAmount,
-    required this.segments,
+    required this.quotes,
     required this.financialEntityCards,
-  }) : assert(segments.length == financialEntityCards.length);
+  });
 
   /// The amounts to assign each item.
-  final List<RallyPieChartSegment> segments;
-  final String heroLabel;
-  final double heroAmount;
-  final double wholeAmount;
+  final List<String> quotes;
   final List<FinancialEntityCategoryView> financialEntityCards;
 
   @override
@@ -51,11 +46,8 @@ class FinancialEntityView extends StatelessWidget {
                 maxWidth,
               ),
             ),
-            child: RallyPieChart(
-              heroLabel: heroLabel,
-              heroAmount: heroAmount,
-              wholeAmount: wholeAmount,
-              segments: segments,
+            child: RotatingQuoteWidget(
+              quotes: quotes,
             ),
           ),
           const SizedBox(height: 24),

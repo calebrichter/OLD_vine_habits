@@ -34,10 +34,7 @@ class _PrayerViewState extends State<PrayerView>
     return TabWithSidebar(
       restorationId: 'bills_view',
       mainView: FinancialEntityView(
-        heroLabel: AppLocalizations.of(context)!.rallyBillsDue,
-        heroAmount: dueTotal,
-        segments: buildSegmentsFromBillItems(items),
-        wholeAmount: dueTotal,
+        quotes: [],
         financialEntityCards: buildBillDataListViews(items, context),
       ),
       sidebarItems: [

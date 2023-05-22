@@ -33,10 +33,7 @@ class _GivingViewState extends State<GivingView>
     return TabWithSidebar(
       restorationId: 'budgets_view',
       mainView: FinancialEntityView(
-        heroLabel: AppLocalizations.of(context)!.rallyBudgetLeft,
-        heroAmount: capTotal - usedTotal,
-        segments: buildSegmentsFromBudgetItems(items),
-        wholeAmount: capTotal,
+        quotes: [],
         financialEntityCards: buildBudgetDataListViews(items, context),
       ),
       sidebarItems: [
