@@ -324,8 +324,7 @@ class _ThumbButtonState extends State<_ThumbButton> {
               height: 120,
               child: ExcludeSemantics(
                 child: Image.asset(
-                  'thumb.png',
-                  package: 'rally_assets',
+                  'assets/logo.png',
                 ),
               ),
             ),

@@ -12,62 +12,10 @@ import 'package:vine_habits/data/gallery_options.dart';
 import 'package:vine_habits/layout/adaptive.dart';
 import 'package:vine_habits/layout/text_scale.dart';
 import 'package:vine_habits/rally/charts/line_chart.dart';
-import 'package:vine_habits/rally/charts/pie_chart.dart';
 import 'package:vine_habits/rally/charts/vertical_fraction_bar.dart';
 import 'package:vine_habits/rally/colors.dart';
 import 'package:vine_habits/rally/data.dart';
 import 'package:vine_habits/rally/formatters.dart';
-import 'package:vine_habits/rally/charts/rotating_quote.dart';
-
-class FinancialEntityView extends StatelessWidget {
-  const FinancialEntityView({
-    super.key,
-    required this.quotes,
-    required this.financialEntityCards,
-  });
-
-  /// The amounts to assign each item.
-  final List<String> quotes;
-  final List<FinancialEntityCategoryView> financialEntityCards;
-
-  @override
-  Widget build(BuildContext context) {
-    final maxWidth = pieChartMaxSize + (cappedTextScale(context) - 1.0) * 100.0;
-    return LayoutBuilder(builder: (context, constraints) {
-      return Column(
-        children: [
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              // We decrease the max height to ensure the [RallyPieChart] does
-              // not take up the full height when it is smaller than
-              // [kPieChartMaxSize].
-              maxHeight: math.min(
-                constraints.biggest.shortestSide * 0.5,
-                maxWidth,
-              ),
-            ),
-            child: RotatingQuoteWidget(
-              quotes: quotes,
-            ),
-          ),
-          Container(
-            height: 1,
-            constraints: BoxConstraints(maxWidth: maxWidth),
-            color: RallyColors.inputBackground,
-          ),
-          Container(
-            constraints: BoxConstraints(maxWidth: maxWidth),
-            color: RallyColors.cardBackground,
-            child: Column(children: [
-              // add a child card for each separate point of the habits
-              financialEntityCards[0],
-            ]),
-          ),
-        ],
-      );
-    });
-  }
-}
 
 /// A reusable widget to show balance information of a single entity as a card.
 class FinancialEntityCategoryView extends StatelessWidget {
