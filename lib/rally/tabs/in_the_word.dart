@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vine_habits/rally/data.dart';
-import 'package:vine_habits/rally/finance.dart';
+import 'package:vine_habits/rally/tabs/cards/in_the_word_cards.dart';
 import 'package:vine_habits/rally/tabs/sidebar.dart';
 
 /// A page that shows a summary of accounts.
@@ -26,9 +26,9 @@ class InTheWordView extends StatelessWidget {
       restorationId: 'accounts_view',
       //TODO:: tear this biz apart.
       // keep the aesthetics, but make it a list of verses.
-      mainView: FinancialEntityView(
+      mainView: InTheWordEntityView(
         quotes: quotes,
-        financialEntityCards: buildAccountDataListViews(items, context),
+        hearTheWordCards: buildAccountDataListViews(items, context),
       ),
       sidebarItems: [
         for (UserDetailData item in detailItems)

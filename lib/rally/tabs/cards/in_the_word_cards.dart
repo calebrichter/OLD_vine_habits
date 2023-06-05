@@ -16,17 +16,68 @@ import 'package:vine_habits/rally/charts/vertical_fraction_bar.dart';
 import 'package:vine_habits/rally/colors.dart';
 import 'package:vine_habits/rally/data.dart';
 import 'package:vine_habits/rally/formatters.dart';
+import 'package:vine_habits/rally/charts/rotating_quote.dart';
+import 'package:vine_habits/rally/charts/pie_chart.dart';
+
+class InTheWordEntityView extends StatelessWidget {
+  const InTheWordEntityView({
+    super.key,
+    required this.quotes,
+    required this.hearTheWordCards,
+  });
+
+  /// The amounts to assign each item.
+  final List<String> quotes;
+  final List<HearTheWordView> hearTheWordCards;
+
+  @override
+  Widget build(BuildContext context) {
+    final maxWidth = pieChartMaxSize + (cappedTextScale(context) - 1.0) * 100.0;
+    return LayoutBuilder(builder: (context, constraints) {
+      return Column(
+        children: [
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              // We decrease the max height to ensure the [RallyPieChart] does
+              // not take up the full height when it is smaller than
+              // [kPieChartMaxSize].
+              maxHeight: math.min(
+                constraints.biggest.shortestSide * 0.5,
+                maxWidth,
+              ),
+            ),
+            child: RotatingQuoteWidget(
+              quotes: quotes,
+            ),
+          ),
+          Container(
+            height: 1,
+            constraints: BoxConstraints(maxWidth: maxWidth),
+            color: RallyColors.inputBackground,
+          ),
+          Container(
+            constraints: BoxConstraints(maxWidth: maxWidth),
+            color: RallyColors.cardBackground,
+            child: Column(children: [
+              // add a child card for each separate point of the habits
+              hearTheWordCards[0],
+            ]),
+          ),
+        ],
+      );
+    });
+  }
+}
 
 /// A reusable widget to show balance information of a single entity as a card.
-class FinancialEntityCategoryView extends StatelessWidget {
-  const FinancialEntityCategoryView({
+class HearTheWordView extends StatelessWidget {
+  const HearTheWordView({
     super.key,
     required this.indicatorColor,
     required this.indicatorFraction,
     required this.title,
     required this.subtitle,
     required this.semanticsLabel,
-    required this.amount,
     required this.suffix,
   });
 
@@ -35,7 +86,6 @@ class FinancialEntityCategoryView extends StatelessWidget {
   final String title;
   final String subtitle;
   final String semanticsLabel;
-  final String amount;
   final Widget suffix;
 
   @override
@@ -98,7 +148,7 @@ class FinancialEntityCategoryView extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              amount,
+                              'Hear the Word',
                               style: textTheme.bodyLarge!.copyWith(
                                 fontSize: 20,
                                 color: RallyColors.gray,
@@ -130,7 +180,7 @@ class FinancialEntityCategoryView extends StatelessWidget {
   }
 }
 
-/// Data model for [FinancialEntityCategoryView].
+/// Data model for [HearTheWordView].
 class FinancialEntityCategoryModel {
   const FinancialEntityCategoryModel(
     this.indicatorColor,
@@ -149,14 +199,14 @@ class FinancialEntityCategoryModel {
   final Widget suffix;
 }
 
-FinancialEntityCategoryView buildFinancialEntityFromAccountData(
+HearTheWordView buildFinancialEntityFromAccountData(
   AccountData model,
   int accountDataIndex,
   BuildContext context,
 ) {
   final amount = usdWithSignFormat(context).format(model.primaryAmount);
   final shortAccountNumber = model.accountNumber.substring(6);
-  return FinancialEntityCategoryView(
+  return HearTheWordView(
     suffix: const Icon(Icons.chevron_right, color: Colors.grey),
     title: model.name,
     subtitle: '• • • • • • $shortAccountNumber',
@@ -167,17 +217,16 @@ FinancialEntityCategoryView buildFinancialEntityFromAccountData(
     ),
     indicatorColor: RallyColors.accountColor(accountDataIndex),
     indicatorFraction: 1,
-    amount: amount,
   );
 }
 
-FinancialEntityCategoryView buildFinancialEntityFromBillData(
+HearTheWordView buildFinancialEntityFromBillData(
   BillData model,
   int billDataIndex,
   BuildContext context,
 ) {
   final amount = usdWithSignFormat(context).format(model.primaryAmount);
-  return FinancialEntityCategoryView(
+  return HearTheWordView(
     suffix: const Icon(Icons.chevron_right, color: Colors.grey),
     title: model.name,
     subtitle: model.dueDate,
@@ -188,11 +237,10 @@ FinancialEntityCategoryView buildFinancialEntityFromBillData(
     ),
     indicatorColor: RallyColors.billColor(billDataIndex),
     indicatorFraction: 1,
-    amount: amount,
   );
 }
 
-FinancialEntityCategoryView buildFinancialEntityFromBudgetData(
+HearTheWordView buildFinancialEntityFromBudgetData(
   BudgetData model,
   int budgetDataIndex,
   BuildContext context,
@@ -202,7 +250,7 @@ FinancialEntityCategoryView buildFinancialEntityFromBudgetData(
   final amount =
       usdWithSignFormat(context).format(model.primaryAmount - model.amountUsed);
 
-  return FinancialEntityCategoryView(
+  return HearTheWordView(
     suffix: Text(
       AppLocalizations.of(context)!.rallyFinanceLeft,
       style: Theme.of(context)
@@ -220,35 +268,34 @@ FinancialEntityCategoryView buildFinancialEntityFromBudgetData(
     ),
     indicatorColor: RallyColors.budgetColor(budgetDataIndex),
     indicatorFraction: model.amountUsed / model.primaryAmount,
-    amount: amount,
   );
 }
 
-List<FinancialEntityCategoryView> buildAccountDataListViews(
+List<HearTheWordView> buildAccountDataListViews(
   List<AccountData> items,
   BuildContext context,
 ) {
-  return List<FinancialEntityCategoryView>.generate(
+  return List<HearTheWordView>.generate(
     items.length,
     (i) => buildFinancialEntityFromAccountData(items[i], i, context),
   );
 }
 
-List<FinancialEntityCategoryView> buildBillDataListViews(
+List<HearTheWordView> buildBillDataListViews(
   List<BillData> items,
   BuildContext context,
 ) {
-  return List<FinancialEntityCategoryView>.generate(
+  return List<HearTheWordView>.generate(
     items.length,
     (i) => buildFinancialEntityFromBillData(items[i], i, context),
   );
 }
 
-List<FinancialEntityCategoryView> buildBudgetDataListViews(
+List<HearTheWordView> buildBudgetDataListViews(
   List<BudgetData> items,
   BuildContext context,
 ) {
-  return <FinancialEntityCategoryView>[
+  return <HearTheWordView>[
     for (int i = 0; i < items.length; i++)
       buildFinancialEntityFromBudgetData(items[i], i, context)
   ];
