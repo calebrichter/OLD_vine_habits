@@ -20,6 +20,7 @@ dependencies:
   transparent_image: ^2.0.1
   path: 
   animated_text_kit: ^4.2.1
+  url_launcher: ^6.0.3
 
 
 
